@@ -69,10 +69,11 @@ MonoBehaviour:
     colliderLayers:
       names:
       - Default
+      - Collider Layer 1
     lightLayers:
       names:
       - Default
-      - O
+      - Light Layer 1
     dayLayers:
       names:
       - Default
