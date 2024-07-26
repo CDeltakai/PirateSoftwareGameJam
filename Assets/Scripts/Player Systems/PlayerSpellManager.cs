@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class PlayerSpellManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] SpellEffect currentSpellEffect;
+
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
+
+
+
+    public SpellEffect MixSpell(SpellElement element1, SpellElement element2, SpellElement element3)
+    {
+        SpellEffect spellEffect = new SpellEffect();
+        //TODO: Implement spell mixing logic
+
+        return spellEffect;
+    }
+
 }

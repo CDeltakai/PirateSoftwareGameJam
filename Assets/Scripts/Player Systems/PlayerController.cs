@@ -5,7 +5,7 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerController : StageEntity
 {
-
+    [SerializeField] int _maxHP = 20;
 
 
     // Start is called before the first frame update

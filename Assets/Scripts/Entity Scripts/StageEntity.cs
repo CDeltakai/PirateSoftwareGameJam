@@ -19,7 +19,7 @@ public class StageEntity : MonoBehaviour
 
 
 [Header("Entity Stats")]
-    [SerializeField] int _currentHP;
+    [SerializeField, Min(0)] int _currentHP = 2;
     public int CurrentHP {
         get{return _currentHP;}
         set
