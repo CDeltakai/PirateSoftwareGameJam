@@ -17,9 +17,12 @@ public class StageEntity : MonoBehaviour
     public Vector3Int tilePosition;
     public Ease defaultMoveEase = Ease.InOutSine;
 
+    StageManager _stageManager;
+
 
 [Header("Entity Stats")]
     [SerializeField, Min(0)] int _currentHP = 2;
+
     public int CurrentHP {
         get{return _currentHP;}
         set
@@ -35,7 +38,8 @@ public class StageEntity : MonoBehaviour
 
     void Start()
     {
-        
+        _stageManager = StageManager.Instance;        
+        InitPosition();
     }
 
     void Update()
@@ -43,21 +47,36 @@ public class StageEntity : MonoBehaviour
         
     }
 
-    bool ValidateMove(Vector2Int direction)
+    void InitPosition()
     {
-        return false;
+        int checkRadius = 2;
+        GroundTileData initialPosition = _stageManager.FindClosestValidTile(worldTransform.position, checkRadius);
+        if(initialPosition == null) 
+        {
+            Debug.LogError("No valid tile found for entity: " + gameObject.name + " at position: " + worldTransform.position + " within a radius of " + checkRadius);
+            return; 
+        }
+        tilePosition = initialPosition.localCoordinates;
+        _stageManager.SetTileEntity(this, tilePosition);
     }
 
-    public virtual void TweenMove(int x, int y)
+
+    public void TweenMove(int x, int y)
     {
         Vector3Int destination = new();
         destination = new Vector3Int(tilePosition.x + x, tilePosition.y + y, 0);
+
+        if(!_stageManager.CheckValidTile(destination)) { return; }
+
+        _stageManager.SetTileEntity(null, tilePosition);
+        tilePosition.Set(destination.x, destination.y, 0);
+        _stageManager.SetTileEntity(this, destination);
 
         worldTransform.DOMove(destination, 0.1f).SetEase(defaultMoveEase);
         tilePosition = destination;
     }
 
-    public virtual void TweenMove(Vector2Int direction)
+    public void TweenMove(Vector2Int direction)
     {
         TweenMove(direction.x, direction.y);
     }
@@ -65,6 +84,22 @@ public class StageEntity : MonoBehaviour
     public void TweenMove(Vector2 direction)
     {
         TweenMove(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
+    }
+
+    public void SetLocation(Vector3Int location)
+    {
+        if(!_stageManager.CheckValidTile(location)) { return; }
+
+        _stageManager.SetTileEntity(null, tilePosition);
+        tilePosition = location;
+        _stageManager.SetTileEntity(this, tilePosition);
+
+        worldTransform.position = location;
+    }
+
+    public void SetLocation(Vector2Int location)
+    {
+        SetLocation(new Vector3Int(location.x, location.y, 0));
     }
 
 }

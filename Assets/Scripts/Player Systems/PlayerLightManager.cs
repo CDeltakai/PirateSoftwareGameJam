@@ -11,6 +11,7 @@ public class PlayerLightManager : MonoBehaviour
     [SerializeField] Light2D playerLight;
 
     [SerializeField] float _minSize = 3f;
+    [SerializeField] float _maxSize = 8f;
     void Start()
     {
         

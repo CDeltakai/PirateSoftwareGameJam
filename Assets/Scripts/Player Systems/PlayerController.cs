@@ -8,18 +8,6 @@ public class PlayerController : StageEntity
     [SerializeField] int _maxHP = 20;
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SelectElement(int elementIndex)
     {
         Debug.Log("Selected element: " + elementIndex);
