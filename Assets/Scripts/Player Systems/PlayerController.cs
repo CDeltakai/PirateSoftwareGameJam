@@ -9,9 +9,19 @@ public class PlayerController : StageEntity
     [SerializeField] int _maxHP = 20;
     public int MaxHP => _maxHP;
 
-    public void SelectElement(int elementIndex)
+    [SerializeField] PlayerSpellManager _spellManager;
+
+    protected override void Start()
     {
-        Debug.Log("Selected element: " + elementIndex);
+        base.Start();
+        if(!_spellManager)
+        {
+            _spellManager = GetComponent<PlayerSpellManager>();
+            if(!_spellManager)
+            {
+                Debug.LogError("PlayerSpellManager not found on PlayerController");
+            }
+        }
     }
 
     public void ConfirmSpell(CallbackContext context)
@@ -26,7 +36,7 @@ public class PlayerController : StageEntity
     {
         if(context.performed)
         {
-            Debug.Log("Spell cancelled");
+            _spellManager.ClearSpellMix();
         }
     }
 

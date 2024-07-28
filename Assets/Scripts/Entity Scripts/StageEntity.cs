@@ -41,10 +41,15 @@ public class StageEntity : MonoBehaviour
 
     public bool IsAlive => _currentHP > 0;
 
-    void Start()
+    void InitStartingMethods()
     {
         _stageManager = StageManager.Instance;        
         InitializePosition();
+    }
+
+    protected virtual void Start()
+    {
+        InitStartingMethods();
     }
 
     void Update()

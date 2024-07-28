@@ -14,5 +14,7 @@ public class SpellElementSO : ScriptableObject
     [SerializeField] Color _elementColor;
     public Color ElementColor => _elementColor;
 
-    
+    [SerializeField] bool _unique;
+    public bool Unique => _unique;
+
 }

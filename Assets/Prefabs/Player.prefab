@@ -88,6 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb30cc29a6f4b86498529984294bb6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSpellManager: {fileID: 5114055125632864383}
+  elementSlots: []
 --- !u!1 &265461893762748690
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,6 +572,7 @@ MonoBehaviour:
   defaultMoveEase: 4
   _currentHP: 8
   _maxHP: 20
+  _spellManager: {fileID: 0}
 --- !u!114 &5114055125632864383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -582,20 +585,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb66be769657f84a910ff41fbd71e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxElements: 3
   currentSpellEffect: {fileID: 0}
-  elementIndexList:
-  - index: 0
-    element: {fileID: 11400000, guid: b1f878468b185fe4289985e29c0cd1b8, type: 2}
-  - index: 1
-    element: {fileID: 11400000, guid: 0ad68ca75cf80a547a559fd14d4a6863, type: 2}
-  - index: 2
-    element: {fileID: 11400000, guid: 50b318e36736076449b99335e8cc2362, type: 2}
-  - index: 3
-    element: {fileID: 11400000, guid: b4c34c54c82e48b409081847657e5eeb, type: 2}
-  - index: 4
-    element: {fileID: 11400000, guid: 6d16034f526ef95439090691aaab31c6, type: 2}
-  - index: 5
-    element: {fileID: 11400000, guid: 2a097611da5910840ab688a9feb1aac0, type: 2}
+  _currentSpellMix:
+    MaxElements: 3
+    mix: []
+  elementList:
+  - {fileID: 11400000, guid: b1f878468b185fe4289985e29c0cd1b8, type: 2}
+  - {fileID: 11400000, guid: 0ad68ca75cf80a547a559fd14d4a6863, type: 2}
+  - {fileID: 11400000, guid: 50b318e36736076449b99335e8cc2362, type: 2}
+  - {fileID: 11400000, guid: b4c34c54c82e48b409081847657e5eeb, type: 2}
+  - {fileID: 11400000, guid: 6d16034f526ef95439090691aaab31c6, type: 2}
+  - {fileID: 11400000, guid: 2a097611da5910840ab688a9feb1aac0, type: 2}
 --- !u!114 &6733092550196929621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,7 +751,12 @@ PrefabInstance:
     - target: {fileID: 4479171443886181746, guid: 3519a8ef5dcd3e04589351acd52c83f6,
         type: 3}
       propertyPath: m_Name
-      value: World Spell Slot (2)
+      value: World Element Slot (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4808810696517063375, guid: 3519a8ef5dcd3e04589351acd52c83f6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -874,7 +880,12 @@ PrefabInstance:
     - target: {fileID: 4479171443886181746, guid: 3519a8ef5dcd3e04589351acd52c83f6,
         type: 3}
       propertyPath: m_Name
-      value: World Spell Slot
+      value: World Element Slot
+      objectReference: {fileID: 0}
+    - target: {fileID: 4808810696517063375, guid: 3519a8ef5dcd3e04589351acd52c83f6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -998,7 +1009,12 @@ PrefabInstance:
     - target: {fileID: 4479171443886181746, guid: 3519a8ef5dcd3e04589351acd52c83f6,
         type: 3}
       propertyPath: m_Name
-      value: World Spell Slot (1)
+      value: World Element Slot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4808810696517063375, guid: 3519a8ef5dcd3e04589351acd52c83f6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

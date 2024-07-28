@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerSpellManager))]
 public class SpellMixerInput : MonoBehaviour
 {
     [SerializeField] InputActionAsset spellMixerControls;
     InputAction selectElementAction;
     Dictionary<string, int> keyToIndex = new();
+
+    PlayerSpellManager playerSpellManager;
 
     void Awake()
     {
@@ -16,7 +19,7 @@ public class SpellMixerInput : MonoBehaviour
 
     void Start()
     {
-        
+        playerSpellManager = GetComponent<PlayerSpellManager>();
     }
 
     void InitializeIndexDictionary()
@@ -28,24 +31,37 @@ public class SpellMixerInput : MonoBehaviour
         keyToIndex.Add("S", 4);
         keyToIndex.Add("D", 5);
 
-        var playerActionMap = spellMixerControls.FindActionMap("Player");
+        InputActionMap playerActionMap = spellMixerControls.FindActionMap("Player");
+
+        if(playerActionMap == null)
+        {
+            Debug.LogError("Player action map not found in: " + spellMixerControls.name);
+            return;
+        }
+
         selectElementAction = playerActionMap.FindAction("SelectElement");
 
-        selectElementAction.Enable();
+        if(selectElementAction == null)
+        {
+            Debug.LogError("SelectElement action not found in: " + playerActionMap.name);
+            return;
+        }
 
+        selectElementAction.Enable();
         selectElementAction.performed += SelectElement;
     }
 
     void SelectElement(InputAction.CallbackContext context)
     {
         // Get the key that was pressed
-        var key = context.control.displayName.ToUpper();
+        string key = context.control.displayName.ToUpper();
 
         if (keyToIndex.TryGetValue(key, out int index))
         {
             // Use the index to select the element from the list
             //Debug.Log("Key pressed: " + key + " - Index: " + index);
-            
+            playerSpellManager.AddElementToMix(index);
+
         }
         else
         {
