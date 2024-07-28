@@ -9,18 +9,28 @@ using DG.Tweening;
 public class PlayerLightManager : MonoBehaviour
 {
     [SerializeField] Light2D playerLight;
+    [SerializeField] CircleCollider2D lightCollider;
 
-    [SerializeField] float _minSize = 3f;
+    [SerializeField] float _minSize = 2f;
     [SerializeField] float _maxSize = 8f;
+
+    [SerializeField] float _lightTweenSpeed = 0.25f;
+
+    PlayerController playerController;
+
+
+
     void Start()
     {
-        
+        playerController = GetComponent<PlayerController>();
+        playerController.OnHPModified += UpdateLightSize;
+        UpdateLightSize();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        lightCollider.radius = playerLight.size;
     }
 
 /// <summary>
@@ -33,5 +43,14 @@ public class PlayerLightManager : MonoBehaviour
         DOTween.To(() => playerLight.size, x => playerLight.size = x, newSize, tweenSpeed);
     }
 
+    void UpdateLightSize()
+    {
+        float currentHP = playerController.CurrentHP;
+        float maxHP = playerController.MaxHP;
+        float healthPercentage = currentHP / maxHP;
+
+        float newSize = Mathf.Lerp(_minSize, _maxSize, healthPercentage);
+        TweenLightSize(newSize, _lightTweenSpeed);
+    }
 
 }

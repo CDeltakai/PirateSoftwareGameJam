@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class StageEntity : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class StageEntity : MonoBehaviour
 
     public delegate void HPChangedEventHandler(int oldValue, int newValue);
     public event HPChangedEventHandler OnHPChanged;
+    public event Action OnHPModified;//No parameters, just a notification
 
 #endregion
 
@@ -32,14 +34,17 @@ public class StageEntity : MonoBehaviour
                 int oldValue = _currentHP;
                 _currentHP = value;
                 OnHPChanged?.Invoke(oldValue, _currentHP);
+                OnHPModified?.Invoke();
             }
         }
     }
 
+    public bool IsAlive => _currentHP > 0;
+
     void Start()
     {
         _stageManager = StageManager.Instance;        
-        InitPosition();
+        InitializePosition();
     }
 
     void Update()
@@ -47,15 +52,17 @@ public class StageEntity : MonoBehaviour
         
     }
 
-    void InitPosition()
+    void InitializePosition()
     {
         int checkRadius = 2;
+
         GroundTileData initialPosition = _stageManager.FindClosestValidTile(worldTransform.position, checkRadius);
         if(initialPosition == null) 
         {
             Debug.LogError("No valid tile found for entity: " + gameObject.name + " at position: " + worldTransform.position + " within a radius of " + checkRadius);
             return; 
         }
+
         tilePosition = initialPosition.localCoordinates;
         _stageManager.SetTileEntity(this, tilePosition);
     }
@@ -100,6 +107,12 @@ public class StageEntity : MonoBehaviour
     public void SetLocation(Vector2Int location)
     {
         SetLocation(new Vector3Int(location.x, location.y, 0));
+    }
+
+    public void EnqueueWorldAction(int priority, TurnActionHandler action, Func<bool> canExecute)
+    {
+        TurnAction turnAction = new(priority, action, canExecute);
+        TurnManager.Instance.AddTurnAction(turnAction);
     }
 
 }

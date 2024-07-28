@@ -26,7 +26,8 @@ public class StageManager : MonoBehaviour
     public List<GroundTileData> groundTileList {get; private set;}
 
 [Header("Debugging")]
-    [Tooltip("If true, the map will be initialized from the first existing MapLayoutController found in the children of the Stage Manager.")]
+    [Tooltip("If true, the map will be initialized from the first existing MapLayoutController found in the children of the Stage Manager" +
+    "and the MapLoader will not be used. Otherwise, the MapLoader will be used to load the map.")]
     [SerializeField] bool _useExistingMap = false;
     [SerializeField] bool _groundTilesInitialized = false;
     public bool GroundTilesInitialized => _groundTilesInitialized;
@@ -35,6 +36,7 @@ public class StageManager : MonoBehaviour
     {
         _instance = this;
         mapLoader = GetComponent<MapLoader>();
+        _groundTilesInitialized = false;
 
         if(_useExistingMap)
         {
@@ -74,6 +76,7 @@ public class StageManager : MonoBehaviour
 
         _groundTilemap = map.GroundTilemap;
         _wallTilemap = map.WallTilemap;
+
     }
 
 
@@ -91,7 +94,7 @@ public class StageManager : MonoBehaviour
         {
             Vector3Int localCoords = new Vector3Int(tilePosition.x, tilePosition.y, 0);
 
-            //If the tile position for some reason does not have a tile, continue to the next position
+            //If the tile position does not have a tile, continue to the next position
             if(!_groundTilemap.HasTile(localCoords)) {continue;}
 
             //Initialize a new GroundTileData object with variables set according to the tilePosition
