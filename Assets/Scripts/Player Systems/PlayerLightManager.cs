@@ -30,7 +30,7 @@ public class PlayerLightManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        lightCollider.radius = playerLight.size;
+        lightCollider.radius = playerLight.size * 0.95f;
     }
 
 /// <summary>

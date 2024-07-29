@@ -16,6 +16,11 @@ public class StageEntity : MonoBehaviour
 
 
     [SerializeField] protected Transform worldTransform;
+    public Transform WorldTransform => worldTransform;
+    [SerializeField] protected Transform _spriteCenterPoint;
+    public Transform SpriteCenterPoint => _spriteCenterPoint;
+
+
     public Vector3Int tilePosition;
     public Ease defaultMoveEase = Ease.InOutSine;
 

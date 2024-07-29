@@ -9,18 +9,33 @@ public class VirtualCursorController : MonoBehaviour
 
     [SerializeField] GameObject _cursorPrefab;
     [SerializeField] GameObject _cursorInstance;
+    [SerializeField] GameObject _targetingReticlePrefab;
+    [SerializeField] GameObject _targetingReticleInstance;
+
     [SerializeField] float _cursorSpeed = 5f;
 
     [SerializeField] Vector2 _cursorVelocity;
 
+[Header("Targeting Algorithms")]
+    [SerializeField] TargetClosestToCursor _targetClosestToCursor;
+
     void Start()
     {
         InitializeCursor();
+        InitializeTargetingReticle();
     }
 
     void Update()
     {
         MoveCursor(_cursorVelocity);
+    }
+
+    void OnValidate()
+    {
+        if(_cursorInstance)
+        {
+            _cursorInstance.SetActive(CursorActive);
+        }
     }
 
     public void InitializeCursor()
@@ -32,6 +47,27 @@ public class VirtualCursorController : MonoBehaviour
 
         CursorActive = false;
         _cursorInstance.SetActive(CursorActive);
+    }
+
+    public void InitializeTargetingReticle()
+    {
+        if(_targetingReticleInstance == null)
+        {
+            _targetingReticleInstance = Instantiate(_targetingReticlePrefab, transform.position, Quaternion.identity);
+        }
+
+        _targetingReticleInstance.SetActive(false);
+
+        // Initialize the TargetClosestToCursor script
+        if(!_targetClosestToCursor)
+        {
+            _targetClosestToCursor = GetComponent<TargetClosestToCursor>();
+            _targetClosestToCursor.virtualCursor = _cursorInstance.transform;
+            _targetClosestToCursor.reticleObject = _targetingReticleInstance;
+            _targetClosestToCursor.useVirtualCursor = true;
+
+            _targetClosestToCursor.searchRadius = _cursorInstance.GetComponent<CircleCollider2D>();
+        }
     }
 
     /// <summary>

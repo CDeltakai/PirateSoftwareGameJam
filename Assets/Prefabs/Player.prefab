@@ -321,7 +321,9 @@ GameObject:
   - component: {fileID: 6733092550196929621}
   - component: {fileID: 4474745160063114647}
   - component: {fileID: 1542449780385612696}
-  m_Layer: 0
+  - component: {fileID: 7931222978327273066}
+  - component: {fileID: 867665588384850212}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -342,6 +344,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6061292794493038559}
+  - {fileID: 1061407315129169027}
   - {fileID: 11699477602103984}
   - {fileID: 5160126553304483446}
   - {fileID: 1090129082126670275}
@@ -517,7 +520,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1583518277792242329}
         m_TargetAssemblyTypeName: VirtualCursorController, Assembly-CSharp
-        m_MethodName: MoveCursor
+        m_MethodName: ChangeCursorDirection
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -586,6 +589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldTransform: {fileID: 1748142460864418158}
+  _spriteCenterPoint: {fileID: 1061407315129169027}
   tilePosition: {x: 0, y: 0, z: 0}
   defaultMoveEase: 4
   _currentHP: 8
@@ -660,6 +664,99 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellMixerControls: {fileID: -944628639613478452, guid: 3a99aec496eb96f4f8f49a43e488da11,
     type: 3}
+--- !u!58 &7931222978327273066
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6672007102339501313}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.35
+--- !u!50 &867665588384850212
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6672007102339501313}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!1 &7347193440790933858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1061407315129169027}
+  m_Layer: 0
+  m_Name: Sprite Center Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1061407315129169027
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347193440790933858}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1748142460864418158}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9148507733757666062
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,6 +767,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1090129082126670275}
   - component: {fileID: 1583518277792242329}
+  - component: {fileID: 8658063624563346335}
   m_Layer: 0
   m_Name: Virtual Cursor Controller
   m_TagString: Untagged
@@ -708,8 +806,34 @@ MonoBehaviour:
   _cursorPrefab: {fileID: 7524461544414156471, guid: 92a6b4b2bbe2a1a41aa82654f2036bac,
     type: 3}
   _cursorInstance: {fileID: 0}
+  _targetingReticlePrefab: {fileID: 1117720291892580885, guid: c320fbb28e9f53c4f91b5ea1f4f19c1c,
+    type: 3}
+  _targetingReticleInstance: {fileID: 0}
   _cursorSpeed: 5
   _cursorVelocity: {x: 0, y: 0}
+  _targetClosestToCursor: {fileID: 0}
+--- !u!114 &8658063624563346335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9148507733757666062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e0089cc972792640ba75e40d1065a6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  searchInterval: 0.1
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  searchRadius: {fileID: 0}
+  boundingRadius: {fileID: 4922476115198578556}
+  reticleObject: {fileID: 0}
+  virtualCursor: {fileID: 0}
+  useVirtualCursor: 1
+  target: {fileID: 0}
 --- !u!1001 &1322105846245611132
 PrefabInstance:
   m_ObjectHideFlags: 0
