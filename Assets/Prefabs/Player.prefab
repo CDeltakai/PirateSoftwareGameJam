@@ -344,6 +344,7 @@ Transform:
   - {fileID: 6061292794493038559}
   - {fileID: 11699477602103984}
   - {fileID: 5160126553304483446}
+  - {fileID: 1090129082126670275}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4411221658395746392
@@ -512,6 +513,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 37fa8e72-2b0b-425e-8da6-e93ff6da0aa7
     m_ActionName: Player/SelectElement[/Keyboard/q,/Keyboard/w,/Keyboard/e,/Keyboard/a,/Keyboard/s,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1583518277792242329}
+        m_TargetAssemblyTypeName: VirtualCursorController, Assembly-CSharp
+        m_MethodName: MoveCursor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ff9988c7-447e-4d24-a701-e0c7a6c6b392
+    m_ActionName: Player/MoveVirtualCursor[/Keyboard/upArrow]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -529,6 +546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb755480605bdb49bb26c345b0d8932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementEnabled: 1
   actionLockoutTime: 0.075
 --- !u!114 &1877010649276066500
 MonoBehaviour:
@@ -572,7 +590,9 @@ MonoBehaviour:
   defaultMoveEase: 4
   _currentHP: 8
   _maxHP: 20
-  _spellManager: {fileID: 0}
+  _spellManager: {fileID: 5114055125632864383}
+  _playerMovement: {fileID: 850483265395303600}
+  _cursorController: {fileID: 1583518277792242329}
 --- !u!114 &5114055125632864383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -640,6 +660,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellMixerControls: {fileID: -944628639613478452, guid: 3a99aec496eb96f4f8f49a43e488da11,
     type: 3}
+--- !u!1 &9148507733757666062
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1090129082126670275}
+  - component: {fileID: 1583518277792242329}
+  m_Layer: 0
+  m_Name: Virtual Cursor Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1090129082126670275
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9148507733757666062}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1748142460864418158}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1583518277792242329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9148507733757666062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67ec7583f294754fa5b0f7f4de82ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CursorActive: 0
+  _cursorPrefab: {fileID: 7524461544414156471, guid: 92a6b4b2bbe2a1a41aa82654f2036bac,
+    type: 3}
+  _cursorInstance: {fileID: 0}
+  _cursorSpeed: 5
+  _cursorVelocity: {x: 0, y: 0}
 --- !u!1001 &1322105846245611132
 PrefabInstance:
   m_ObjectHideFlags: 0

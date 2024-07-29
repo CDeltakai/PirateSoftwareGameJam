@@ -8,7 +8,10 @@ public class PlayerMovement : MonoBehaviour
 {
     PlayerController playerController;
 
+    public bool movementEnabled = true;
     [SerializeField] float actionLockoutTime = 0.1f;
+
+
 
     bool isPerformingAction = false;
 
@@ -34,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     public void MoveUp(CallbackContext context)
     {
         if(isPerformingAction){return;}
+        if(!movementEnabled){return;}
 
         if(context.performed)
         {
@@ -46,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     public void MoveDown(CallbackContext context)
     {
         if(isPerformingAction){return;}
+        if(!movementEnabled){return;}
 
         if(context.performed)
         {
@@ -59,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
     public void MoveLeft(CallbackContext context)
     {
         if(isPerformingAction){return;}
+        if(!movementEnabled){return;}
 
         if(context.performed)
         {
@@ -72,6 +78,7 @@ public class PlayerMovement : MonoBehaviour
     public void MoveRight(CallbackContext context)
     {
         if(isPerformingAction){return;}
+        if(!movementEnabled){return;}
 
         if(context.performed)
         {
