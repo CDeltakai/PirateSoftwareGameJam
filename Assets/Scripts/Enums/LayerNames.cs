@@ -10,4 +10,6 @@ public enum LayerNames
     UI = 5,
     Lighting_Internal_Game = 6,
     Lighting_Internal_Scene = 7,
+    StageEntities = 8,
+    Impassable = 9,
 }

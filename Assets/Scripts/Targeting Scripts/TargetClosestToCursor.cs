@@ -7,10 +7,17 @@ public class TargetClosestToCursor : MonoBehaviour
 {
     [SerializeField] float searchInterval = 0.1f;
     public LayerMask targetLayer;
+    
+    [Tooltip("Optional; if set, will check for obstacles between the lineOfSightTransform and the target")]
+    public LayerMask obstacleLayer; // used for line of sight checks - if set, will check for obstacles between the lineOfSightTransform and the target
+
+
     public CircleCollider2D searchRadius;
     public CircleCollider2D boundingRadius; // If this is set, any target outside of this radius will be ignored
     public GameObject reticleObject;
 
+    [Tooltip("Optional; if set, will be used to check line of sight to target")]
+    public Transform lineOfSightTransform; // optional; if set, will be used to check line of sight to target
     public Transform virtualCursor;
     public bool useVirtualCursor = true;
 
@@ -26,10 +33,7 @@ public class TargetClosestToCursor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!searchRadius || !reticleObject)
-        {
-            return;
-        }
+        if(!searchRadius || !reticleObject) { return; }
 
         searchTimer += Time.unscaledDeltaTime;
         if (searchTimer >= searchInterval)
@@ -59,11 +63,7 @@ public class TargetClosestToCursor : MonoBehaviour
             return;
         }
 
-        if (reticleTween.IsActive())
-        {
-            reticleTween.Kill();
-        }
-
+        if (reticleTween.IsActive()) { reticleTween.Kill(); }
         reticleTween = reticleObject.transform.DOMove(position, 0.15f).SetEase(Ease.OutExpo).SetUpdate(true);
     }
 
@@ -84,41 +84,53 @@ public class TargetClosestToCursor : MonoBehaviour
     }
 
 
-StageEntity FindClosestTarget()
-{
-    Collider2D[] colliders = Physics2D.OverlapCircleAll(searchRadius.transform.position, searchRadius.radius, targetLayer);
-    if (colliders.Length == 0)
+    StageEntity FindClosestTarget()
     {
-        return null;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(searchRadius.transform.position, searchRadius.radius, targetLayer);
+        if (colliders.Length == 0)
+        {
+            return null;
+        }
+
+        StageEntity closestTarget = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (!collider.CompareTag(TagNames.Enemy.ToString()))
+            {
+                continue;
+            }
+            if (!collider.TryGetComponent<StageEntity>(out var entity))
+            {
+                continue;
+            }
+
+            // Check if the entity is within the bounding radius
+            float distanceToSearchRadius = Vector2.Distance(searchRadius.transform.position, entity.transform.position);
+            float distanceToBoundingRadius = boundingRadius != null ? Vector2.Distance(boundingRadius.transform.position, entity.transform.position) : float.MaxValue;
+
+            // Check line of sight if losTransform is set
+            if (lineOfSightTransform != null)
+            {
+                Vector2 direction = entity.transform.position - lineOfSightTransform.position;
+                RaycastHit2D hit = Physics2D.Raycast(lineOfSightTransform.position, direction, direction.magnitude, obstacleLayer);
+                if (hit.collider != null)
+                {
+                    // There is an obstacle between the losTransform and the entity
+                    continue;
+                }
+            }
+
+            //Debug.Log($"Entity: {entity.name}, DistanceToSearchRadius: {distanceToSearchRadius}, DistanceToBoundingRadius: {distanceToBoundingRadius}, BoundingRadius: {boundingRadius?.radius ?? float.MaxValue}");
+
+            if (distanceToSearchRadius < closestDistance && (boundingRadius == null || distanceToBoundingRadius <= boundingRadius.radius))
+            {
+                closestDistance = distanceToSearchRadius;
+                closestTarget = entity;
+            }
+        }
+
+        return closestTarget;
     }
-
-    StageEntity closestTarget = null;
-    float closestDistance = float.MaxValue;
-
-    foreach (Collider2D collider in colliders)
-    {
-        if (!collider.CompareTag(TagNames.Enemy.ToString()))
-        {
-            continue;
-        }
-        if (!collider.TryGetComponent<StageEntity>(out var entity))
-        {
-            continue;
-        }
-
-        // Check if the entity is within the bounding radius
-        float distanceToSearchRadius = Vector2.Distance(searchRadius.transform.position, entity.transform.position);
-        float distanceToBoundingRadius = boundingRadius != null ? Vector2.Distance(boundingRadius.transform.position, entity.transform.position) : float.MaxValue;
-
-        //Debug.Log($"Entity: {entity.name}, DistanceToSearchRadius: {distanceToSearchRadius}, DistanceToBoundingRadius: {distanceToBoundingRadius}, BoundingRadius: {boundingRadius?.radius ?? float.MaxValue}");
-
-        if (distanceToSearchRadius < closestDistance && (boundingRadius == null || distanceToBoundingRadius <= boundingRadius.radius))
-        {
-            closestDistance = distanceToSearchRadius;
-            closestTarget = entity;
-        }
-    }
-
-    return closestTarget;
-}
 }

@@ -149,7 +149,7 @@ MonoBehaviour:
   coreSize: 0.5
   falloff: 0
   lightStrength: 0.162
-  outerAngle: 19.9
+  outerAngle: 7.5
   lightRadius: 1
   shadowDistanceClose: 1.53
   shadowDistanceFar: 26.88
@@ -828,9 +828,13 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 512
   searchRadius: {fileID: 0}
   boundingRadius: {fileID: 4922476115198578556}
   reticleObject: {fileID: 0}
+  lineOfSightTransform: {fileID: 1748142460864418158}
   virtualCursor: {fileID: 0}
   useVirtualCursor: 1
   target: {fileID: 0}
