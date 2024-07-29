@@ -23,7 +23,7 @@ public class SpellMix
             mix.Add(element);
         }else
         {
-            Debug.LogWarning("Cannot add more than 3 elements to the mix");
+            //Debug.LogWarning("Cannot add more than 3 elements to the mix");
         }
     }
 

@@ -12,6 +12,8 @@ public class SpellEffect : MonoBehaviour
     [SerializeField] ParticleSystem tertiaryParticles;
     [SerializeField] ParticleSystem impactParticles;
 
+    [SerializeField] Transform uniqueEffectTransform;
+
     [SerializeField] Light2D pointLight;
     [SerializeField] SpriteRenderer bulletSpriteRenderer;
     [SerializeField] TrailRenderer bulletTrail;
@@ -44,6 +46,12 @@ public class SpellEffect : MonoBehaviour
         pointLight.color = pointLightColor;
         bulletSpriteRenderer.color = bulletSpriteColor;
         bulletTrail.startColor = bulletTrailColor;
+    }
+
+    public void AddUniqueParticle(GameObject particleEffect)
+    {
+        GameObject uniqueEffect = Instantiate(particleEffect, uniqueEffectTransform);
+        uniqueEffect.transform.localPosition = Vector3.zero;
     }
 
 }

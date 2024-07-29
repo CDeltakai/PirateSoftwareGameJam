@@ -17,4 +17,7 @@ public class SpellElementSO : ScriptableObject
     [SerializeField] bool _unique;
     public bool Unique => _unique;
 
+    [SerializeField] GameObject _particleEffect;
+    public GameObject ParticleEffect => _particleEffect;
+
 }

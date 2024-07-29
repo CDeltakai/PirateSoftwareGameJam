@@ -9910,6 +9910,7 @@ Transform:
   - {fileID: 6323855696159213909}
   - {fileID: 6852950575393199326}
   - {fileID: 3191682655591900255}
+  - {fileID: 3922453600624123450}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &693679268979168754
@@ -9928,6 +9929,7 @@ MonoBehaviour:
   secondaryParticles: {fileID: 7053687861573629966}
   tertiaryParticles: {fileID: 0}
   impactParticles: {fileID: 3278214791239354123}
+  uniqueEffectTransform: {fileID: 3922453600624123450}
   pointLight: {fileID: 4912432378403978083}
   bulletSpriteRenderer: {fileID: 5782967320350122523}
   bulletTrail: {fileID: 2315041226093880150}
@@ -14799,6 +14801,37 @@ MonoBehaviour:
   useParticleColor: 1
   scale: 8.04
   customParticle: {fileID: 0}
+--- !u!1 &5459156947476130584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3922453600624123450}
+  m_Layer: 0
+  m_Name: Unique Particles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3922453600624123450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5459156947476130584}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6697688336881848751}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5813224383743307687
 GameObject:
   m_ObjectHideFlags: 0
@@ -14826,7 +14859,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.58, y: 0.58, z: 0.58}
+  m_LocalScale: {x: 0.43, y: 0.43, z: 0.43}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6697688336881848751}
@@ -14851,7 +14884,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 2b1ebaf2e054b3b448eb1f45c384f2cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
