@@ -5,27 +5,31 @@ using DG.Tweening;
 
 public class TargetClosestToCursor : MonoBehaviour
 {
+    [Tooltip("How often to search for targets")]
     [SerializeField] float searchInterval = 0.1f;
     public LayerMask targetLayer;
-    
-    [Tooltip("Optional; if set, will check for obstacles between the lineOfSightTransform and the target")]
-    public LayerMask obstacleLayer; // used for line of sight checks - if set, will check for obstacles between the lineOfSightTransform and the target
-
 
     public CircleCollider2D searchRadius;
-    public CircleCollider2D boundingRadius; // If this is set, any target outside of this radius will be ignored
     public GameObject reticleObject;
 
-    [Tooltip("Optional; if set, will be used to check line of sight to target")]
-    public Transform lineOfSightTransform; // optional; if set, will be used to check line of sight to target
     public Transform virtualCursor;
     public bool useVirtualCursor = true;
 
     [SerializeField] StageEntity target;
     public StageEntity Target { get { return target; } }
 
-    private float searchTimer = 0f;
+[Header("Optional")]
+    [Tooltip("Optional; if set, will be used to check line of sight to target")]
+    public Transform lineOfSightTransform; // optional; if set, will be used to check line of sight to target
 
+    [Tooltip("Optional; if set, any target outside of this radius will be ignored")]
+    public CircleCollider2D boundingRadius; // If this is set, any target outside of this radius will be ignored
+
+    [Tooltip("Optional; if set, will check for obstacles between the lineOfSightTransform and the target")]
+    public LayerMask obstacleLayer; // used for line of sight checks - if set, will check for obstacles between the lineOfSightTransform and the target
+
+
+    private float searchTimer = 0f;
     Tween reticleTween;
 
 

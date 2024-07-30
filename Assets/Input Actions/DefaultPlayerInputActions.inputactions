@@ -60,6 +60,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "DeploySpell",
+                    "type": "Button",
+                    "id": "fd6827c1-75d9-445b-ad0a-20975c35b2af",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "SelectElement",
                     "type": "Button",
                     "id": "37fa8e72-2b0b-425e-8da6-e93ff6da0aa7",
@@ -265,6 +274,17 @@
                     "action": "MoveVirtualCursor",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b62772c6-3b6b-4632-859a-7450b41aef87",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "DeploySpell",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

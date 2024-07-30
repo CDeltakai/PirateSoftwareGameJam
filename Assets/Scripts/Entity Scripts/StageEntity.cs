@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 
+[RequireComponent(typeof(EntityStatusManager))]
 public class StageEntity : MonoBehaviour
 {
 #region Events and Delegates
@@ -11,6 +12,7 @@ public class StageEntity : MonoBehaviour
     public delegate void HPChangedEventHandler(int oldValue, int newValue);
     public event HPChangedEventHandler OnHPChanged;
     public event Action OnHPModified;//No parameters, just a notification
+    public event Action OnKilled;
 
 #endregion
 
@@ -24,7 +26,6 @@ public class StageEntity : MonoBehaviour
     public Vector3Int tilePosition;
     public Ease defaultMoveEase = Ease.InOutSine;
 
-    StageManager _stageManager;
 
 
 [Header("Entity Stats")]
@@ -45,10 +46,17 @@ public class StageEntity : MonoBehaviour
     }
 
     public bool IsAlive => _currentHP > 0;
+    public bool invincible = false;
+
+//References
+    StageManager _stageManager;
+    EntityStatusManager _statusManager;
+
 
     void InitStartingMethods()
     {
-        _stageManager = StageManager.Instance;        
+        _stageManager = StageManager.Instance;      
+        _statusManager = GetComponent<EntityStatusManager>();  
         InitializePosition();
     }
 
@@ -123,6 +131,34 @@ public class StageEntity : MonoBehaviour
     {
         TurnAction turnAction = new(priority, action, canExecute);
         TurnManager.Instance.AddTurnAction(turnAction);
+    }
+
+    public void HurtEntity(DamagePayload damagePayload)
+    {
+        if(invincible) { return; }
+
+        foreach(var statusEffect in damagePayload.statusEffects)
+        {
+            _statusManager.ApplyStatusEffect(statusEffect);
+        }
+
+        CurrentHP -= damagePayload.damage;
+        if(!IsAlive)
+        {
+            DestroyEntity();
+        }
+    }
+
+
+    public virtual void DestroyEntity(Action preDestroyAction = null)
+    {
+        preDestroyAction?.Invoke();
+
+        _stageManager.SetTileEntity(null, tilePosition);
+
+        OnKilled?.Invoke();
+
+        Destroy(gameObject);
     }
 
 }

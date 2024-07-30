@@ -5,8 +5,16 @@ using UnityEngine;
 
 public class SpellEffect : MonoBehaviour
 {
+    public enum ControlType
+    {
+        Guided, // Should use the TargetClosestToCursor algorithm
+        FreeAim, // Should use the FreeAimTargeting algorithm which allows player to place the attack anywhere within light radius
+        Cardinal, // Should use the CardinalTargeting algorithm which allows player to place the attack in 4 directions
+        Self, // No targeting, spell is cast on the player
+    }
 
-[Header("References")]
+
+[Header("Visual FX")]
     [SerializeField] ParticleSystem primaryParticles;
     [SerializeField] ParticleSystem secondaryParticles;
     [SerializeField] ParticleSystem tertiaryParticles;
@@ -18,7 +26,7 @@ public class SpellEffect : MonoBehaviour
     [SerializeField] SpriteRenderer bulletSpriteRenderer;
     [SerializeField] TrailRenderer bulletTrail;
 
-[Header("Settings")]
+[Header("Visual FX Settings")]
     public Color primaryParticlesColor;
     public Color secondaryParticlesColor;
     public Color tertiaryParticlesColor;
@@ -28,6 +36,9 @@ public class SpellEffect : MonoBehaviour
     public Color bulletSpriteColor;
     public Color bulletTrailColor;
 
+[Header("Combat Attributes")]
+    public DamagePayload damagePayload;
+    public ControlType controlType;
 
     public void ApplySettings()
     {

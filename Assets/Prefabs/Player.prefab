@@ -323,6 +323,7 @@ GameObject:
   - component: {fileID: 1542449780385612696}
   - component: {fileID: 7931222978327273066}
   - component: {fileID: 867665588384850212}
+  - component: {fileID: 5766895778693508819}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -532,6 +533,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ff9988c7-447e-4d24-a701-e0c7a6c6b392
     m_ActionName: Player/MoveVirtualCursor[/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8293227505782365526}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: DeploySpell
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fd6827c1-75d9-445b-ad0a-20975c35b2af
+    m_ActionName: Player/DeploySpell[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -593,6 +610,7 @@ MonoBehaviour:
   tilePosition: {x: 0, y: 0, z: 0}
   defaultMoveEase: 4
   _currentHP: 8
+  invincible: 0
   _maxHP: 20
   _spellManager: {fileID: 5114055125632864383}
   _playerMovement: {fileID: 850483265395303600}
@@ -726,6 +744,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5766895778693508819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6672007102339501313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3f80016dc8f8e49a1bc0fe33ad6dd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 0}
+  _stunned: 0
+  _remainingStunTurns: 0
 --- !u!1 &7347193440790933858
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,16 +861,16 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 512
   searchRadius: {fileID: 0}
-  boundingRadius: {fileID: 4922476115198578556}
   reticleObject: {fileID: 0}
-  lineOfSightTransform: {fileID: 1748142460864418158}
   virtualCursor: {fileID: 0}
   useVirtualCursor: 1
   target: {fileID: 0}
+  lineOfSightTransform: {fileID: 1748142460864418158}
+  boundingRadius: {fileID: 4922476115198578556}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1001 &1322105846245611132
 PrefabInstance:
   m_ObjectHideFlags: 0

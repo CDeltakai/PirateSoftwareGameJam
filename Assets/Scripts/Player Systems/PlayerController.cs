@@ -49,6 +49,14 @@ public class PlayerController : StageEntity
         }
     }
 
+    public void DeploySpell(CallbackContext context)
+    {
+        if(context.performed)
+        {
+            _spellManager.CastSpell();
+        }
+    }
+
     public void PerformPlayerAction(int priority, TurnActionHandler action, Func<bool> canExecute)
     {
         TurnAction turnAction = new(priority, action, canExecute);

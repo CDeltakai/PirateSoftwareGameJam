@@ -8,8 +8,10 @@ public class PlayerSpellManager : MonoBehaviour
 {
     public event Action OnSpellMixChanged;
 
-
     [SerializeField] int maxElements = 3;
+
+    [SerializeField] GameObject baseSpellPrefab;
+
     [SerializeField] SpellEffect currentSpellEffect;
     [SerializeField] SpellMix _currentSpellMix = new();
     public SpellMix CurrentSpellMix => _currentSpellMix;
@@ -46,6 +48,15 @@ public class PlayerSpellManager : MonoBehaviour
         SpellEffect spellEffect = new SpellEffect();
         //TODO: Implement spell mixing logic
 
+    }
+
+    public void CastSpell()
+    {
+        if(!currentSpellEffect)
+        {
+            Debug.LogWarning("No spell effect set");
+            return;
+        }
     }
 
     public void AddElementToMix(SpellElementSO element)

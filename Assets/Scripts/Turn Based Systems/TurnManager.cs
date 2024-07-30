@@ -37,6 +37,9 @@ public class TurnAction
 
 public class TurnManager : MonoBehaviour
 {
+    public event Action OnNextTurn;
+
+
     public static TurnManager Instance { get; private set; }
 
 
@@ -103,6 +106,7 @@ public class TurnManager : MonoBehaviour
         }
 
         _turnCount++;
+        OnNextTurn?.Invoke();
     }
 
 }
