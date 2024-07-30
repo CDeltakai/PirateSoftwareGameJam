@@ -16,3 +16,6 @@ MonoBehaviour:
   _elementIcon: {fileID: 21300000, guid: 1815ea71c4e799e45b0db8899c240c4a, type: 3}
   _elementColor: {r: 0.49803922, g: 0.5491525, b: 0.7372549, a: 1}
   _unique: 1
+  _particleEffect: {fileID: 0}
+  _elementEffectModifiers:
+  - {fileID: 8111149927183442986, guid: 8ea9934960f94974c9dbd3e5ffa2d199, type: 3}

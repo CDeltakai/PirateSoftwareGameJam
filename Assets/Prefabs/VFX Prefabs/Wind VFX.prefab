@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8166079474991137204}
   - component: {fileID: 4615794839089636132}
   m_Layer: 0
-  m_Name: Wind Effect
+  m_Name: Wind VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

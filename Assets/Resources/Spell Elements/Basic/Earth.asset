@@ -15,3 +15,7 @@ MonoBehaviour:
   _elementName: Earth
   _elementIcon: {fileID: 21300000, guid: 7c6c8b4baa5364447a19c7dc2fec3fa3, type: 3}
   _elementColor: {r: 0, g: 1, b: 0.025779486, a: 1}
+  _unique: 0
+  _particleEffect: {fileID: 0}
+  _elementEffectModifiers:
+  - {fileID: 6697213086055688772, guid: 697a190eed245334d8f5e4e6bb36ec08, type: 3}

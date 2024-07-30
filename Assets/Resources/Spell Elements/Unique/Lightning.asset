@@ -18,3 +18,5 @@ MonoBehaviour:
   _unique: 1
   _particleEffect: {fileID: 9208681576986102346, guid: 4dd4a980c997abc4f9e59a565bac4923,
     type: 3}
+  _elementEffectModifiers:
+  - {fileID: 4676019316268753556, guid: ad3b7af3a4c1496449fa919cd3676b74, type: 3}

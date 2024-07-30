@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3014117263095985732}
   - component: {fileID: 2464519558560461536}
   m_Layer: 0
-  m_Name: Lightning Effect
+  m_Name: Lightning VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +116,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.11
+      scalar: 0.1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4129,7 +4129,7 @@ ParticleSystem:
     widthOverTrail:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.39
       minScalar: 1
       maxCurve:
         serializedVersion: 2

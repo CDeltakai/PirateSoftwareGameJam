@@ -45,7 +45,6 @@ public class PlayerSpellManager : MonoBehaviour
 
     public void MixSpell(SpellMix spellMix)
     {
-        SpellEffect spellEffect = new SpellEffect();
         //TODO: Implement spell mixing logic
 
     }

@@ -37,8 +37,25 @@ public class SpellEffect : MonoBehaviour
     public Color bulletTrailColor;
 
 [Header("Combat Attributes")]
+    [SerializeField] GameObject effectModifiersParent;
+
+    public SpellElementSO primaryElement;
+    public SpellElementSO secondaryElement;
+    public SpellElementSO tertiaryElement;
+
     public DamagePayload damagePayload;
-    public ControlType controlType;
+    public ControlType controlType = ControlType.Guided;
+
+    void Awake()
+    {
+        ApplySettings();
+    }
+
+    void Start()
+    {
+
+    }
+
 
     public void ApplySettings()
     {
@@ -57,6 +74,67 @@ public class SpellEffect : MonoBehaviour
         pointLight.color = pointLightColor;
         bulletSpriteRenderer.color = bulletSpriteColor;
         bulletTrail.startColor = bulletTrailColor;
+    }
+
+
+    public void ApplyPrimaryElement()
+    {
+        ApplyElementEffect(primaryElement);
+
+        if(primaryElement.Unique)
+        {
+            AddUniqueParticle(primaryElement.ParticleEffect);
+        }else
+        {
+            var primaryParticlesMain = primaryParticles.main;
+            primaryParticlesMain.startColor = primaryElement.ElementColor;
+            primaryParticles.gameObject.SetActive(true);
+        }
+
+    }
+
+    public void ApplySecondaryElement()
+    {
+        ApplyElementEffect(secondaryElement);
+
+        if(secondaryElement.Unique)
+        {
+            AddUniqueParticle(secondaryElement.ParticleEffect);
+        }else
+        {
+            var secondaryParticlesMain = secondaryParticles.main;
+            secondaryParticlesMain.startColor = secondaryElement.ElementColor;
+            secondaryParticles.gameObject.SetActive(true);
+        }
+    }
+
+    public void ApplyTertiaryElement()
+    {
+        ApplyElementEffect(tertiaryElement);
+
+        if(tertiaryElement.Unique)
+        {
+            AddUniqueParticle(tertiaryElement.ParticleEffect);
+        }else
+        {
+            var tertiaryParticlesMain = tertiaryParticles.main;
+            tertiaryParticlesMain.startColor = tertiaryElement.ElementColor;
+            tertiaryParticles.gameObject.SetActive(true);
+        }
+    }
+
+    void ApplyElementEffect(SpellElementSO element)
+    {
+        if (element == null)
+        {
+            return;
+        }
+
+        foreach (GameObject effectModifier in element.ElementEffectModifiers)
+        {
+            ElementEffectModifier modifier = effectModifier.GetComponent<ElementEffectModifier>();
+            modifier.ModifyEffect(this);
+        }
     }
 
     public void AddUniqueParticle(GameObject particleEffect)

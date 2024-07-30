@@ -15,3 +15,7 @@ MonoBehaviour:
   _elementName: Water
   _elementIcon: {fileID: 21300000, guid: 6f649aea2852e3b46a8c4386355a2c53, type: 3}
   _elementColor: {r: 0, g: 0.6102462, b: 1, a: 1}
+  _unique: 0
+  _particleEffect: {fileID: 0}
+  _elementEffectModifiers:
+  - {fileID: 3333750409396097593, guid: 6b2e4317e5e576f4d8f41a3b6dc9c1ab, type: 3}
