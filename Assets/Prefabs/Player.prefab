@@ -350,6 +350,7 @@ MonoBehaviour:
   playerSpellManager: {fileID: 5114055125632864383}
   baseSpellPrefab: {fileID: 2939496586463614309, guid: 5a0cac28b4979c84ba5a38e2b148f839,
     type: 3}
+  _spellEffectInstance: {fileID: 0}
 --- !u!1 &6672007102339501313
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,6 +664,7 @@ MonoBehaviour:
   _spellManager: {fileID: 5114055125632864383}
   _playerMovement: {fileID: 850483265395303600}
   _cursorController: {fileID: 1583518277792242329}
+  controlState: 0
 --- !u!114 &5114055125632864383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -676,6 +678,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxElements: 3
+  spellPreviewController: {fileID: 1596957297736164529}
+  virtualCursorController: {fileID: 1583518277792242329}
   baseSpellPrefab: {fileID: 2939496586463614309, guid: 5a0cac28b4979c84ba5a38e2b148f839,
     type: 3}
   currentSpellEffect: {fileID: 0}
@@ -851,6 +855,7 @@ GameObject:
   - component: {fileID: 1090129082126670275}
   - component: {fileID: 1583518277792242329}
   - component: {fileID: 8658063624563346335}
+  - component: {fileID: 2141510421584129739}
   m_Layer: 0
   m_Name: Virtual Cursor Controller
   m_TagString: Untagged
@@ -892,9 +897,12 @@ MonoBehaviour:
   _targetingReticlePrefab: {fileID: 1117720291892580885, guid: c320fbb28e9f53c4f91b5ea1f4f19c1c,
     type: 3}
   _targetingReticleInstance: {fileID: 0}
+  _boundingRadius: {fileID: 4922476115198578556}
   _cursorSpeed: 5
   _cursorVelocity: {x: 0, y: 0}
-  _targetClosestToCursor: {fileID: 0}
+  _targetingType: 0
+  _targetClosestToCursor: {fileID: 8658063624563346335}
+  _freeAimTargeting: {fileID: 2141510421584129739}
 --- !u!114 &8658063624563346335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -921,6 +929,23 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &2141510421584129739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9148507733757666062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4439b6f08be03419c404a9e72c2206, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  searchInterval: 0.1
+  _targetPosition: {x: 0, y: 0, z: 0}
+  reticleSprite: {fileID: 0}
+  virtualCursor: {fileID: 0}
+  useVirtualCursor: 1
 --- !u!1001 &1322105846245611132
 PrefabInstance:
   m_ObjectHideFlags: 0

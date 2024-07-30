@@ -6,6 +6,6 @@ public class LightningEffect : ElementEffectModifier
 {
     public override void ModifyEffect(SpellEffect effect)
     {
-        effect.controlType = SpellEffect.ControlType.Cardinal;        
+        effect.targetingType = TargetingControlType.Cardinal;        
     }
 }

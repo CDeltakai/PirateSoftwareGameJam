@@ -1,20 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using FunkyCode;
 using UnityEngine;
+public enum TargetingControlType
+{
+    Guided, // Should use the TargetClosestToCursor algorithm
+    FreeAim, // Should use the FreeAimTargeting algorithm which allows player to place the attack anywhere within light radius
+    Cardinal, // Should use the CardinalTargeting algorithm which allows player to place the attack in 4 directions
+    Self, // No targeting, spell is cast on the player
+}
 
 public class SpellEffect : MonoBehaviour
 {
-    public enum ControlType
-    {
-        Guided, // Should use the TargetClosestToCursor algorithm
-        FreeAim, // Should use the FreeAimTargeting algorithm which allows player to place the attack anywhere within light radius
-        Cardinal, // Should use the CardinalTargeting algorithm which allows player to place the attack in 4 directions
-        Self, // No targeting, spell is cast on the player
-    }
 
 
 [Header("Visual FX")]
+    [SerializeField] GameObject projectileParticlesParent;
     [SerializeField] ParticleSystem primaryParticles;
     [SerializeField] ParticleSystem secondaryParticles;
     [SerializeField] ParticleSystem tertiaryParticles;
@@ -44,7 +47,17 @@ public class SpellEffect : MonoBehaviour
     public SpellElementSO tertiaryElement;
 
     public DamagePayload damagePayload;
-    public ControlType controlType = ControlType.Guided;
+    public TargetingControlType targetingType = TargetingControlType.Guided;
+
+[Header("Targeting")]
+    public StageEntity targetEntity;
+    public Vector3 targetPosition;
+    [SerializeField] float speed = 5f;
+    [SerializeField] bool _reachedDestination = false;
+    public bool ReachedDestination => _reachedDestination;
+
+[Header("Debugging")]
+    [SerializeField] bool testDeployGuided = false;
 
     void Awake()
     {
@@ -56,6 +69,14 @@ public class SpellEffect : MonoBehaviour
 
     }
 
+    void Update()
+    {
+        if(testDeployGuided)
+        {
+            testDeployGuided = false;
+            DeploySpellGuided(targetEntity);
+        }
+    }
 
     public void ApplySettings()
     {
@@ -137,10 +158,82 @@ public class SpellEffect : MonoBehaviour
         }
     }
 
+
     public void AddUniqueParticle(GameObject particleEffect)
     {
         GameObject uniqueEffect = Instantiate(particleEffect, uniqueEffectTransform);
         uniqueEffect.transform.localPosition = Vector3.zero;
+    }
+
+    void TriggerImpact()
+    {
+        projectileParticlesParent.SetActive(false);
+        bulletSpriteRenderer.enabled = false;
+        impactParticles.gameObject.SetActive(true);
+        TweenLightSize(0, 0.5f);
+        StartCoroutine(WaitAndDestroy(impactParticles.main.duration));
+    }
+
+    public void TweenLightSize(float newSize, float tweenSpeed)
+    {
+        DOTween.To(() => pointLight.size, x => pointLight.size = x, newSize, tweenSpeed);
+    }
+
+
+    IEnumerator WaitAndDestroy(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Destroy(gameObject);
+    }
+
+    public void DeploySpellGuided(StageEntity targetEntity)
+    {
+        DetachFromParent();
+        _reachedDestination = false;
+
+        this.targetEntity = targetEntity;
+        StartCoroutine(MoveToLocationWithConstantSpeed(targetEntity.SpriteCenterPoint.position, speed));
+        StartCoroutine(WaitUntilDestinationReached(() => 
+        {
+            TriggerImpact();
+            ApplyDamage(targetEntity);
+        }));
+    }
+
+    void ApplyDamage(StageEntity target)
+    {
+        target.HurtEntity(damagePayload);
+    }
+
+    IEnumerator MoveToLocationWithConstantSpeed(Vector3 targetPosition, float speed)
+    {
+        while(Vector3.Distance(transform.position, targetPosition) > 0.1f)
+        {
+
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            yield return null;
+        }
+
+        _reachedDestination = true;
+    }
+
+    IEnumerator WaitUntilDestinationReached(Action callback = null)
+    {
+        yield return new WaitUntil(() => _reachedDestination);
+        callback?.Invoke();
+    }
+
+    public void DeploySpellFreeAim(Vector3 targetPosition)
+    {
+        DetachFromParent();
+        _reachedDestination = false;
+
+        StartCoroutine(MoveToLocationWithConstantSpeed(targetPosition, speed));
+    }
+
+    public void DetachFromParent()
+    {
+        transform.parent = null;
     }
 
 }

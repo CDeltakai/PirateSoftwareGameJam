@@ -39,6 +39,11 @@ public class TargetClosestToCursor : MonoBehaviour
     {
         if(!searchRadius || !reticleObject) { return; }
 
+        if(!virtualCursor.gameObject.activeInHierarchy && useVirtualCursor)
+        {
+            return;
+        }
+
         searchTimer += Time.unscaledDeltaTime;
         if (searchTimer >= searchInterval)
         {

@@ -7,7 +7,8 @@ public class SpellPreviewController : MonoBehaviour
     [SerializeField] PlayerSpellManager playerSpellManager;
     [SerializeField] GameObject baseSpellPrefab;
 
-    [SerializeField] SpellEffect spellEffectInstance;
+    [SerializeField] SpellEffect _spellEffectInstance;
+    public SpellEffect SpellEffectInstance => _spellEffectInstance;
 
 
     void Start()
@@ -19,7 +20,7 @@ public class SpellPreviewController : MonoBehaviour
     {
         GameObject spellPreview = Instantiate(baseSpellPrefab, transform);   
         spellPreview.transform.localPosition = Vector3.zero;
-        spellEffectInstance = spellPreview.GetComponent<SpellEffect>();
+        _spellEffectInstance = spellPreview.GetComponent<SpellEffect>();
     }
 
     void CancelSpellPreview()
@@ -37,36 +38,36 @@ public class SpellPreviewController : MonoBehaviour
             CancelSpellPreview();
         }
         else
-        if(!spellEffectInstance && playerSpellManager.CurrentSpellMix.Mix.Count > 0)
+        if(!_spellEffectInstance && playerSpellManager.CurrentSpellMix.Mix.Count > 0)
         {
             GenerateSpellPreview();
         }
 
-        if(spellEffectInstance)
+        if(_spellEffectInstance)
         {
             for (int i = 0; i < playerSpellManager.CurrentSpellMix.Mix.Count; i++)
             {
-                if(!spellEffectInstance.primaryElement)
+                if(!_spellEffectInstance.primaryElement)
                 {
-                    spellEffectInstance.primaryElement = playerSpellManager.CurrentSpellMix.Mix[0];
-                    spellEffectInstance.ApplyPrimaryElement();
+                    _spellEffectInstance.primaryElement = playerSpellManager.CurrentSpellMix.Mix[0];
+                    _spellEffectInstance.ApplyPrimaryElement();
                 }
 
                 //If the element is not already applied to the spell effect, apply it.
-                if(i == 0 && !spellEffectInstance.primaryElement)
+                if(i == 0 && !_spellEffectInstance.primaryElement)
                 {
-                    spellEffectInstance.primaryElement = playerSpellManager.CurrentSpellMix.Mix[i];
-                    spellEffectInstance.ApplyPrimaryElement();
+                    _spellEffectInstance.primaryElement = playerSpellManager.CurrentSpellMix.Mix[i];
+                    _spellEffectInstance.ApplyPrimaryElement();
                 }
-                else if(i == 1 && !spellEffectInstance.secondaryElement)
+                else if(i == 1 && !_spellEffectInstance.secondaryElement)
                 {
-                    spellEffectInstance.secondaryElement = playerSpellManager.CurrentSpellMix.Mix[i];
-                    spellEffectInstance.ApplySecondaryElement();
+                    _spellEffectInstance.secondaryElement = playerSpellManager.CurrentSpellMix.Mix[i];
+                    _spellEffectInstance.ApplySecondaryElement();
                 }
-                else if(i == 2 && !spellEffectInstance.tertiaryElement)
+                else if(i == 2 && !_spellEffectInstance.tertiaryElement)
                 {
-                    spellEffectInstance.tertiaryElement = playerSpellManager.CurrentSpellMix.Mix[i];
-                    spellEffectInstance.ApplyTertiaryElement();
+                    _spellEffectInstance.tertiaryElement = playerSpellManager.CurrentSpellMix.Mix[i];
+                    _spellEffectInstance.ApplyTertiaryElement();
                 }
             }
         }

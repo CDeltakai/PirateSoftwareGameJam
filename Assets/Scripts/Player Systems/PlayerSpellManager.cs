@@ -10,6 +10,8 @@ public class PlayerSpellManager : MonoBehaviour
 
     [SerializeField] int maxElements = 3;
 
+    [SerializeField] SpellPreviewController spellPreviewController;
+    [SerializeField] VirtualCursorController virtualCursorController;
     [SerializeField] GameObject baseSpellPrefab;
 
     [SerializeField] SpellEffect currentSpellEffect;
@@ -17,6 +19,9 @@ public class PlayerSpellManager : MonoBehaviour
     public SpellMix CurrentSpellMix => _currentSpellMix;
 
     [SerializeField] List<SpellElementSO> elementList;
+
+    [SerializeField] bool _castingInProgress = false;
+    public bool CastingInProgress => _castingInProgress;
 
     void Awake()
     {
@@ -28,10 +33,6 @@ public class PlayerSpellManager : MonoBehaviour
         
     }
 
-    void Update()
-    {
-        
-    }
 
     // This method will be called by Unity when the script is loaded or a value is changed in the inspector
     private void OnValidate()
@@ -49,13 +50,50 @@ public class PlayerSpellManager : MonoBehaviour
 
     }
 
-    public void CastSpell()
+    public bool ConfirmSpellMix()
+    {
+        if(_currentSpellMix.Mix.Count == 0)
+        {
+            return false;
+        }
+
+        currentSpellEffect = spellPreviewController.SpellEffectInstance;
+        virtualCursorController.SetTargetingType(currentSpellEffect.targetingType);
+        return true;
+    }
+
+    public bool CastSpell()
     {
         if(!currentSpellEffect)
         {
             Debug.LogWarning("No spell effect set");
-            return;
+            return false;
         }
+
+        object target = virtualCursorController.GetTarget();
+        if(target == null)
+        {
+            Debug.Log("No target set");
+            return false;
+        }
+
+        //This is a really bad idea but I was out of time so it'll have to do for now
+        switch (currentSpellEffect.targetingType)
+        {
+            case TargetingControlType.Guided:
+                currentSpellEffect.DeploySpellGuided((StageEntity)virtualCursorController.GetTarget());
+                break;
+            case TargetingControlType.FreeAim:
+                currentSpellEffect.DeploySpellFreeAim((Vector3)virtualCursorController.GetTarget());
+                break;
+            case TargetingControlType.Cardinal:
+                break;
+            default:
+                break;
+        }
+
+        ClearSpellMix();
+        return true;
     }
 
     public void AddElementToMix(SpellElementSO element)

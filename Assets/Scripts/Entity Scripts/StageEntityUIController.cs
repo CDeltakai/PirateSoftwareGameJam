@@ -13,11 +13,20 @@ public class StageEntityUIController : MonoBehaviour
 
     void Start()
     {
-        
+        stageEntity = GetComponent<StageEntity>();
+        stageEntity.OnHPModified += UpdateHPText;
+        UpdateHPText();
     }
 
     void Update()
     {
         
     }
+
+    void UpdateHPText()
+    {
+        HPText.text = stageEntity.CurrentHP.ToString();
+    }
+
+
 }
