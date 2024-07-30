@@ -101,6 +101,18 @@ public class StageEntity : MonoBehaviour
         tilePosition = destination;
     }
 
+    //Overload for Vector3Int - Moves directly to the destination
+    public void TweenMove(Vector3Int destination)
+    {
+        if(!_stageManager.CheckValidTile(destination)) { return; }
+        _stageManager.SetTileEntity(null, tilePosition);
+        tilePosition.Set(destination.x, destination.y, 0);
+        _stageManager.SetTileEntity(this, destination);
+
+        worldTransform.DOMove(destination, 0.1f).SetEase(defaultMoveEase);
+        tilePosition = destination;
+    }
+
     public void TweenMove(Vector2Int direction)
     {
         TweenMove(direction.x, direction.y);

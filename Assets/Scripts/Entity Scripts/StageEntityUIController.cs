@@ -25,6 +25,8 @@ public class StageEntityUIController : MonoBehaviour
 
     void UpdateHPText()
     {
+        if(!HPText){return;}
+
         HPText.text = stageEntity.CurrentHP.ToString();
     }
 

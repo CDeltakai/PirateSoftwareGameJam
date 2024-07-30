@@ -23,6 +23,11 @@ public class PlayerSpellManager : MonoBehaviour
     [SerializeField] bool _castingInProgress = false;
     public bool CastingInProgress => _castingInProgress;
 
+    [SerializeField] float _hpReductionThreshold = 0.2f;
+
+
+    PlayerController player;
+
     void Awake()
     {
         _currentSpellMix.MaxElements = maxElements;
@@ -30,7 +35,7 @@ public class PlayerSpellManager : MonoBehaviour
 
     void Start()
     {
-        
+        player = GetComponent<PlayerController>();
     }
 
 
@@ -92,8 +97,30 @@ public class PlayerSpellManager : MonoBehaviour
                 break;
         }
 
+        ReducePlayerHP(_currentSpellMix.Mix.Count);
         ClearSpellMix();
         return true;
+    }
+
+    public void ReducePlayerHP(int amount)
+    {
+        //Debug.Log("Reducing player HP by: " + amount);
+        //Debug.Log("Current HP Percent: " + (float)player.CurrentHP / (float)player.MaxHP);
+
+        if ((float)player.CurrentHP / (float)player.MaxHP <= _hpReductionThreshold)
+        {
+            //Debug.Log("Player is already at 25% HP");
+            return;
+        }
+
+        if (player.CurrentHP - amount <= (float)player.MaxHP * _hpReductionThreshold)
+        {
+            player.CurrentHP = (int)(player.MaxHP * _hpReductionThreshold);
+        }
+        else
+        {
+            player.CurrentHP -= amount;
+        }
     }
 
     public void AddElementToMix(SpellElementSO element)

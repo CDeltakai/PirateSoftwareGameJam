@@ -25,6 +25,8 @@ public class PlayerController : StageEntity
     [SerializeField] float actionLockoutTime = 0.1f;
     [SerializeField] bool actionLocked = false;
 
+    [SerializeField] int restoreHPOnKill;
+
     protected override void Start()
     {
         base.Start();

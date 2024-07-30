@@ -18,7 +18,8 @@ public class PlayerLightManager : MonoBehaviour
 
     PlayerController playerController;
 
-
+[Header("Debugging")]
+    [SerializeField] bool forceUpdate = false;
 
     void Start()
     {
@@ -30,6 +31,12 @@ public class PlayerLightManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(forceUpdate)
+        {
+            forceUpdate = false;
+            UpdateLightSize();
+        }
+
         lightCollider.radius = playerLight.size * 0.95f;
     }
 

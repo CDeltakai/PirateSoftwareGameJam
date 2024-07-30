@@ -17,7 +17,9 @@ public class StageManager : MonoBehaviour
 
 
     [SerializeField] Tilemap _groundTilemap;
+    public Tilemap GroundTilemap => _groundTilemap;
     [SerializeField] Tilemap _wallTilemap;
+    public Tilemap WallTilemap => _wallTilemap;
     KDTree2D tileKDTree;
 
     public Dictionary<Vector3, GroundTileData> groundTileDictionary {get; private set;}
