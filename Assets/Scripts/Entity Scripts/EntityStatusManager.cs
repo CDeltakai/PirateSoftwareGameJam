@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,4 +45,15 @@ public class EntityStatusManager : MonoBehaviour
         }
     }    
 
+    public void FlashRed()
+    {
+        StartCoroutine(FlashRedRoutine());
+    }
+
+    IEnumerator FlashRedRoutine()
+    {
+        _spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.05f);
+        _spriteRenderer.color = Color.white;
+    }
 }

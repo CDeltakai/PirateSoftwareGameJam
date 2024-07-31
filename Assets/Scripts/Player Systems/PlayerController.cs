@@ -54,10 +54,8 @@ public class PlayerController : StageEntity
 
     public void ConfirmSpell(CallbackContext context)
     {
-        if(actionLocked)
-        {
-            return;
-        }
+        if(TurnManager.TurnInProgress){return;}
+        if(actionLocked){return;}
 
         if(controlState != ControlState.Movement)
         {
@@ -77,6 +75,9 @@ public class PlayerController : StageEntity
 
     public void CancelSpell(CallbackContext context)
     {
+        if(TurnManager.TurnInProgress){return;}
+
+
         if(context.performed)
         {
             SwitchControlState(ControlState.Movement);  
@@ -86,6 +87,9 @@ public class PlayerController : StageEntity
 
     public void DeploySpell(CallbackContext context)
     {
+        if(TurnManager.TurnInProgress){return;}
+
+
         if(actionLocked)
         {
             return;
@@ -98,20 +102,27 @@ public class PlayerController : StageEntity
 
         if(context.performed)
         {
-            if(_spellManager.CastSpell())
+
+            void ExecuteSpell()
             {
-                SwitchControlState(ControlState.Movement);
-                ActionLockout();
+                if(_spellManager.CastSpell())
+                {
+                    SwitchControlState(ControlState.Movement);
+                    ActionLockout();
+                }
             }
+
+            PerformPlayerAction(0, ExecuteSpell, () => IsAlive, () => !_spellManager.CastingInProgress);
+
         }
     }
 
 
 
-    public void PerformPlayerAction(int priority, TurnActionHandler action, Func<bool> canExecute)
+    public void PerformPlayerAction(int priority, TurnActionHandler action, Func<bool> canExecute, Func<bool> delayCondition = null)
     {
         TurnAction turnAction = new(priority, action, canExecute);
-        TurnManager.Instance.ExecutePlayerAction(turnAction);
+        TurnManager.Instance.ExecutePlayerAction(turnAction, delayCondition);
     }
 
     public void SwitchControlState(ControlState state)

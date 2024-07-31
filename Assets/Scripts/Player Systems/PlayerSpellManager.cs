@@ -82,6 +82,8 @@ public class PlayerSpellManager : MonoBehaviour
             return false;
         }
 
+        StartCoroutine(CastInProgress());
+
         //This is a really bad idea but I was out of time so it'll have to do for now
         switch (currentSpellEffect.targetingType)
         {
@@ -102,6 +104,12 @@ public class PlayerSpellManager : MonoBehaviour
         return true;
     }
 
+    IEnumerator CastInProgress()
+    {
+        _castingInProgress = true;
+        yield return new WaitUntil(() => currentSpellEffect == null || !currentSpellEffect);
+        _castingInProgress = false;
+    }
     public void ReducePlayerHP(int amount)
     {
         //Debug.Log("Reducing player HP by: " + amount);

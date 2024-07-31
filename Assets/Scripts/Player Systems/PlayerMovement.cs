@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void MoveUp(CallbackContext context)
     {
+        if(TurnManager.TurnInProgress){return;}
         if(isPerformingAction){return;}
         if(!movementEnabled){return;}
 
@@ -49,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void MoveDown(CallbackContext context)
     {
+        if(TurnManager.TurnInProgress){return;}
         if(isPerformingAction){return;}
         if(!movementEnabled){return;}
 
@@ -63,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void MoveLeft(CallbackContext context)
     {
+        if(TurnManager.TurnInProgress){return;}
         if(isPerformingAction){return;}
         if(!movementEnabled){return;}
 
@@ -77,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void MoveRight(CallbackContext context)
     {
+        if(TurnManager.TurnInProgress){return;}
         if(isPerformingAction){return;}
         if(!movementEnabled){return;}
 

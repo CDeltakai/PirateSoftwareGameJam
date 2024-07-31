@@ -19,17 +19,17 @@ public class Pathfinding
             [start] = Heuristic(start, target)
         };
 
-        Debug.Log($"Starting pathfinding from {start} to {target}");
+        //Debug.Log($"Starting pathfinding from {start} to {target}");
 
         while (openSet.Count > 0)
         {
             Vector3Int current = GetLowestFScore(openSet, fScore);
 
-            Debug.Log($"Current tile: {current}");
+            //Debug.Log($"Current tile: {current}");
 
             if (current == target)
             {
-                Debug.Log("Target reached. Reconstructing path.");
+                //Debug.Log("Target reached. Reconstructing path.");
                 return ReconstructPath(cameFrom, current);
             }
 
@@ -58,7 +58,7 @@ public class Pathfinding
             }
         }
 
-        Debug.Log("No path found.");
+        //Debug.Log("No path found.");
         return null; // No path found
     }
 

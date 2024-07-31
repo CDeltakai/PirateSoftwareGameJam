@@ -816,7 +816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f3f80016dc8f8e49a1bc0fe33ad6dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 0}
+  _spriteRenderer: {fileID: 5942707405012349443}
   _stunned: 0
   _remainingStunTurns: 0
 --- !u!1 &7347193440790933858

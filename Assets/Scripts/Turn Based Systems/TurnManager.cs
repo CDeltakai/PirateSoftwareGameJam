@@ -41,7 +41,7 @@ public class TurnManager : MonoBehaviour
 
 
     public static TurnManager Instance { get; private set; }
-
+    public static bool TurnInProgress { get; private set; } = false;
 
     [SerializeField] int _turnCount = 0;
     public int TurnCount => _turnCount;
@@ -79,10 +79,39 @@ public class TurnManager : MonoBehaviour
     /// Player actions are always executed first before the rest of actions from other sources
     /// </summary>
     /// <param name="playerAction"></param>
-    public void ExecutePlayerAction(TurnAction playerAction)
+    public void ExecutePlayerAction(TurnAction playerAction, Func<bool> condition = null)
     {
         playerAction.Invoke();
+        if (condition != null)
+        {
+            StartCoroutine(WaitForCondition(condition));
+        }
+        else
+        {
+            ExecuteNextTurn();
+        }
+    }
+
+    IEnumerator WaitForCondition(Func<bool> condition)
+    {
+        TurnInProgress = true;
+
+        while (!condition())
+        {
+            yield return null;
+        }
+
         ExecuteNextTurn();
+        TurnInProgress = false;
+
+    }
+
+    IEnumerator DelayNextTurn(float delay)
+    {
+        TurnInProgress = true;
+        yield return new WaitForSeconds(delay);
+        ExecuteNextTurn();
+        TurnInProgress = false;
     }
 
     public void ExecuteNextTurn()

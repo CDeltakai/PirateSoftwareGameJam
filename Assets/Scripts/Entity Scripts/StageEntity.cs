@@ -51,12 +51,14 @@ public class StageEntity : MonoBehaviour
 //References
     StageManager _stageManager;
     EntityStatusManager _statusManager;
+    StageEntityUIController _uiController;
 
 
     void InitStartingMethods()
     {
         _stageManager = StageManager.Instance;      
         _statusManager = GetComponent<EntityStatusManager>();  
+        _uiController = GetComponent<StageEntityUIController>();
         InitializePosition();
     }
 
@@ -153,6 +155,8 @@ public class StageEntity : MonoBehaviour
         {
             _statusManager.ApplyStatusEffect(statusEffect);
         }
+
+        _statusManager.FlashRed();
 
         CurrentHP -= damagePayload.damage;
         if(!IsAlive)
