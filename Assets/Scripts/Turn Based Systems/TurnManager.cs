@@ -49,6 +49,7 @@ public class TurnManager : MonoBehaviour
     //The queue of actions here is to take into account actions of the same priority
     //such that they are executed in the order they were added 
     SortedList<int, Queue<TurnAction>> turnQueue = new();
+    [SerializeField] int turnQueueCount = 0;
 
     void Awake()
     {
@@ -132,9 +133,11 @@ public class TurnManager : MonoBehaviour
                     turnQueue.Remove(highestPriority);
                 }
             }
+            turnQueueCount = turnQueue.Count;
         }
 
         _turnCount++;
+        
         OnNextTurn?.Invoke();
     }
 

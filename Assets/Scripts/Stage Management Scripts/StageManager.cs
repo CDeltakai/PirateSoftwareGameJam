@@ -172,6 +172,14 @@ public class StageManager : MonoBehaviour
         return null;
     }
 
+    public GroundTileData GetRandomValidTile()
+    {
+        GroundTileData randomTile = groundTileList[UnityEngine.Random.Range(0, groundTileList.Count)];
+        if(CheckValidTile(randomTile.localCoordinates)){ return randomTile; }
+
+        return null;
+    }
+
 
     //Checks if the given coordinates are valid based on a number conditions. Returns true if conditions are passed,
     //false otherwise.

@@ -25,7 +25,17 @@ public class PlayerController : StageEntity
     [SerializeField] float actionLockoutTime = 0.1f;
     [SerializeField] bool actionLocked = false;
 
-    [SerializeField] int restoreHPOnKill;
+    [SerializeField] int restoreHPOnKill = 3;
+    EventBinding<NPCKilledEvent> npcKilledEventBinding;
+
+    public void RestoreHP(int amount)
+    {
+        CurrentHP += amount;
+        if(CurrentHP > _maxHP)
+        {
+            CurrentHP = _maxHP;
+        }
+    }
 
     protected override void Start()
     {
@@ -38,6 +48,12 @@ public class PlayerController : StageEntity
                 Debug.LogError("PlayerSpellManager not found on PlayerController");
             }
         }
+    }
+
+    void OnEnable()
+    {
+        npcKilledEventBinding = new EventBinding<NPCKilledEvent>(() => RestoreHP(restoreHPOnKill));
+        EventBus<NPCKilledEvent>.Register(npcKilledEventBinding);        
     }
 
     void ActionLockout()

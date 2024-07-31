@@ -712,7 +712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerLight: {fileID: 2139988462026129294}
   lightCollider: {fileID: 4922476115198578556}
-  _minSize: 2.5
+  _minSize: 1.5
   _maxSize: 7
   _lightTweenSpeed: 0.25
   forceUpdate: 0

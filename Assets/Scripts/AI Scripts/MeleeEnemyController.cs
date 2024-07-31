@@ -30,6 +30,9 @@ public class MeleeEnemyController : MonoBehaviour
     [SerializeField] State _currentState = State.Idle;
     [SerializeField] DamagePayload damagePayload;
     
+    [SerializeField] CircleCollider2D aggroRange;
+    [SerializeField] bool Aggroed;
+
     [Header("Attacking Debug")]
     [SerializeField] bool preparingAttack = false;
 
@@ -44,6 +47,11 @@ public class MeleeEnemyController : MonoBehaviour
     {
         stageManager = StageManager.Instance;
         turnManager = TurnManager.Instance;
+
+        if(!player)
+        {
+            player = GameManager.Instance.PlayerRef;
+        }
 
         currentTile = stageManager.GroundTilemap.WorldToCell(transform.position);
         targetTile = stageManager.GroundTilemap.WorldToCell(player.tilePosition);
@@ -74,11 +82,28 @@ public class MeleeEnemyController : MonoBehaviour
         turnManager.AddTurnAction(action);
     }
 
+    void ScanForPlayer()
+    {
+        float distance = Vector3.Distance(stageEntity.tilePosition, player.tilePosition);
+        if(distance <= aggroRange.radius)
+        {
+            Aggroed = true;
+        }
+    }
+
     public void CheckState()
     {
         if(cooldownTurns > 0)
         {
             cooldownTurns--;
+            return;
+        }
+
+        ScanForPlayer();
+        if(!Aggroed)
+        {
+            _currentState = State.Idle;
+            PerformAction();
             return;
         }
 
@@ -125,7 +150,7 @@ public class MeleeEnemyController : MonoBehaviour
         switch (_currentState)
         {
             case State.Idle:
-            MoveRandomly();
+                MoveRandomly();
                 break;
             case State.Moving:
                 MoveAlongPath();

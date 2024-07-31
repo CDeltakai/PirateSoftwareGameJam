@@ -29,7 +29,7 @@ public class StageEntity : MonoBehaviour
 
 
 [Header("Entity Stats")]
-    [SerializeField, Min(0)] int _currentHP = 2;
+    [SerializeField, Min(0)] protected int _currentHP = 2;
 
     public int CurrentHP {
         get{return _currentHP;}
@@ -173,6 +173,9 @@ public class StageEntity : MonoBehaviour
         _stageManager.SetTileEntity(null, tilePosition);
 
         OnKilled?.Invoke();
+
+        EventBus<NPCKilledEvent>.Raise(new NPCKilledEvent {npc = this});
+
 
         Destroy(gameObject);
     }
